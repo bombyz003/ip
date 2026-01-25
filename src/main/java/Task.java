@@ -17,6 +17,15 @@ public class Task {
 
     @Override
     public String toString() {
-        return desc;
+        if(desc.toLowerCase().startsWith("todo")) {
+            return desc.substring(5);
+        }
+        else if (desc.toLowerCase().startsWith("deadline")) {
+            return desc.substring(9);
+        }
+        else if (desc.toLowerCase().startsWith("event")) {
+            return desc.substring(6);
+        }
+        else return desc;
     }
 }
