@@ -35,8 +35,7 @@ public class TalkCok {
             else if (input.toLowerCase().startsWith("todo ")) {
                 String s = input.substring(5);
                 if (s.isEmpty()) {
-                    System.out.println("You tryna do nothing? Task description is empty, invalid.");
-                    continue;
+                    throw new ShittyInputException("You tryna do nothing? Task description is empty, invalid.");
                 }
                 ToDo t = new ToDo(input);
                 x++;
@@ -54,8 +53,7 @@ public class TalkCok {
                 String description = parts[0].trim();
                 String by = parts[1].trim();
                 if (description.isEmpty() || by.isEmpty()) {
-                    System.out.println("Task description or deadline missing, or both");
-                    continue;
+                    throw new ShittyInputException("Task description or deadline missing, or both");
                 }
                 Deadline dt = new Deadline(description, by);
                 x++;
@@ -67,8 +65,7 @@ public class TalkCok {
                 String abc = input.substring(6);
                 String[] parts = abc.split("/from|/to", 3);
                 if (parts.length != 3) {
-                    System.out.println("Follow format: event (task) /from __ /to __");
-                    continue;
+                    throw new ShittyInputException("Follow format: event (task) /from __ /to __");
                 }
                 String description = parts[0].trim();
                 String start = parts[1].trim();
