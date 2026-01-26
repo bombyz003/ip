@@ -33,6 +33,11 @@ public class TalkCok {
             }
 
             else if (input.toLowerCase().startsWith("todo ")) {
+                String s = input.substring(5);
+                if (s.isEmpty()) {
+                    System.out.println("You tryna do nothing? Task description is empty, invalid.");
+                    continue;
+                }
                 ToDo t = new ToDo(input);
                 x++;
                 System.out.println("ok, task added: " + t.toString());
@@ -43,11 +48,15 @@ public class TalkCok {
                 String abc = input.substring(9);
                 String[] parts = abc.split("/by");
                 if (parts.length < 2) {
-                    System.out.println("Follow format: deadline (task) /by (date)");
+                    System.out.println("Error: Follow format: deadline (task) /by (date)");
                     continue;
                 }
                 String description = parts[0].trim();
                 String by = parts[1].trim();
+                if (description.isEmpty() || by.isEmpty()) {
+                    System.out.println("Task description or deadline missing, or both");
+                    continue;
+                }
                 Deadline dt = new Deadline(description, by);
                 x++;
                 System.out.println("ok, task added: " + dt.toString());
@@ -74,7 +83,7 @@ public class TalkCok {
             else if (input.equalsIgnoreCase("bye")) {
                 break;
             }
-            else System.out.println("Enter task type vro");
+            else System.out.println("UNKNOWN COMMAND: I don't know what you're saying");
         }
 
         System.out.println("Aw man, bye bye!");
