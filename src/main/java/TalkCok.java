@@ -7,7 +7,7 @@ public class TalkCok {
         List<Task> ls = new ArrayList<>();
         int x = 0;
 
-        System.out.println("____________________________");
+        //System.out.println("____________________________");
         System.out.println("Hi, I'm TalkCok!");
         System.out.println("What do ya have for me today? (enter bye to quit)\n");
 
