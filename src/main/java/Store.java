@@ -8,9 +8,14 @@ public class Store {
     private static final String FILE_PATH = "data/TalkCok.txt";
 
     public static void confirmDirectoryExist() {
-        File f = new File("java");
+        File f = new File("data");
         if (!f.exists()) {
-            f.mkdirs();
+            boolean created = f.mkdirs();
+            if (!created) {
+                System.out.println("Error creating data directory");
+                return;
+            }
+            System.out.println("Created folder: data");
         }
     }
 
