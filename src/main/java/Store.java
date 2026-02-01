@@ -1,6 +1,8 @@
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -77,13 +79,13 @@ public class Store {
                     task = new ToDo(description);
                     break;
                 case "D":
-                    String by = parts[3];
+                    LocalDateTime by = DTParser.parseFromFile(parts[3]);
                     task = new Deadline(description, by);
                     break;
                 case "E":
                     String[] fromToText = parts[3].split("-", 2);
-                    String start = fromToText[0];
-                    String end = fromToText[1];
+                    LocalDateTime start = DTParser.parseFromFile(fromToText[0]);
+                    LocalDateTime end = DTParser.parseFromFile(fromToText[1]);
                     task = new Event(description, start, end);
                     break;
             }

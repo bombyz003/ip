@@ -1,5 +1,5 @@
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class TalkCok {
@@ -11,7 +11,6 @@ public class TalkCok {
         ArrayList<Task> tasks = Store.loadTasks();
         Scanner scan = new Scanner(System.in);
         String input;
-        int x = 0;
 
         while (true) {
             input = scan.nextLine();
@@ -41,9 +40,8 @@ public class TalkCok {
                     throw new ShittyInputException("You tryna do nothing? Task description is empty, invalid.");
                 }
                 ToDo t = new ToDo(input);
-                x++;
-                System.out.println("ok, task added: " + t.toString());
-                System.out.println("you now have " + x + " tasks in the list.");
+                System.out.println("Task added: " + t.toString());
+                System.out.println("you now have " + tasks.size() + " tasks in the list.");
                 tasks.add(t);
                 Store.save(tasks);
             }
@@ -56,14 +54,13 @@ public class TalkCok {
                     continue;
                 }
                 String description = parts[0].trim();
-                String by = parts[1].trim();
-                if (description.isEmpty() || by.isEmpty()) {
+                LocalDateTime by = DTParser.parse(parts[1].trim());
+                if (description.isEmpty()) {
                     throw new ShittyInputException("Task description or deadline missing, or both");
                 }
                 Deadline dt = new Deadline(description, by);
-                x++;
                 System.out.println("ok, task added: " + dt.toString());
-                System.out.println("you now have " + x + " tasks in the list.");
+                System.out.println("you now have " + tasks.size() + " tasks in the list.");
                 tasks.add(dt);
                 Store.save(tasks);
             }
@@ -75,12 +72,11 @@ public class TalkCok {
                     throw new ShittyInputException("Follow format: event (task) /from __ /to __");
                 }
                 String description = parts[0].trim();
-                String start = parts[1].trim();
-                String end = parts[2].trim();
+                LocalDateTime start = DTParser.parse(parts[1]);
+                LocalDateTime end = DTParser.parse(parts[2]);
                 Event et = new Event(description, start, end);
-                x++;
                 System.out.println("ok, task added: " + et.toString());
-                System.out.println("you now have " + x + " tasks in the list.");
+                System.out.println("you now have " + tasks.size() + " tasks in the list.");
                 tasks.add(et);
                 Store.save(tasks);
             } else if (input.startsWith("delete ")) {       //delete the task
@@ -91,9 +87,8 @@ public class TalkCok {
                     Task deleted = tasks.get(toDelete - 1);
                     tasks.remove(toDelete - 1);
                     System.out.println("Task removed: " + deleted.toString());
-                    x--;
                     Store.save(tasks);
-                    System.out.println("You now have " + x + " tasks in the list");
+                    System.out.println("You now have " + tasks.size() + " tasks in the list");
                 }
             } else if (input.equalsIgnoreCase("bye")) {
                 break;
