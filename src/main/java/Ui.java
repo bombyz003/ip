@@ -1,0 +1,56 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Ui {
+    private Scanner scanner;
+
+    public Ui() {
+        this.scanner = new Scanner(System.in);
+    }
+
+    public void openingMessage() {
+        System.out.println("____________________________");
+        System.out.println("Hi, I am TalkCok your chatbot. Please enter your inputs.");
+    }
+
+    public void exitMessage() {
+        System.out.println("Byebies. Hope to see you again!");
+    }
+
+    public void showTaskAdded(Task t, int totalTasks) {
+        System.out.println("Task added: " + t.toString());
+        System.out.println("you now have " + totalTasks + " tasks in the list.");
+    }
+
+    public void showTaskDeleted(Task t, int totalTasks) {
+        System.out.println("Task removed: " + t.toString());
+        System.out.println("You now have " + totalTasks + " tasks in the list.");
+    }
+
+    public void listTask(ArrayList<Task> tasks) {
+        if (tasks.isEmpty()) {
+            System.out.println("Your task list is empty!");
+        }
+        System.out.println("Here are your tasks:\n");
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println((i + 1) + ". " + tasks.get(i));
+        }
+    }
+
+    public void markTask(Task task) {
+        System.out.println("Great. This task is marked as done:");
+        System.out.println(task.marker() + " " + task.desc);
+    }
+
+    public void showLoadingError() {
+        System.out.println("No saved tasks, new file created.");
+    }
+
+    public void errorMessage(String message) {
+        System.out.println("Error: " + message);
+    }
+
+    public void showSavingError() {
+        System.out.println("Cannot save tasks to file");
+    }
+}
