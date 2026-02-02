@@ -26,7 +26,8 @@ public class Parser {
             case "deadline":
                 String[] splitTwo = args.split("/by");
                 if (splitTwo.length < 2 || parts[1].trim().isEmpty()) {
-                    throw new ShittyInputException("Deadline (after /by) is empty.");
+                    throw new ShittyInputException("Format error. Accepted format:\n" +
+                            "deadline [task] /by [deadline]");
                 }
 
                 String deadlineDesc = parts[0].trim();
@@ -43,7 +44,6 @@ public class Parser {
                     throw new ShittyInputException("Format error. Accepted format:\n" +
                             "event [task] from [date time] to [date time]");
                 }
-
                 String eventDesc = splitThree[0].trim();
                 String from = splitThree[1].trim();
                 String to = splitThree[2].trim();
@@ -56,6 +56,9 @@ public class Parser {
             case "delete":
                 int toDelete = Integer.parseInt(args.trim()) - 1;
                 return new AfterParse("delete", String.valueOf(toDelete));
+
+            case "bye":
+                return new AfterParse("bye", args);
 
             default:
                 throw new ShittyInputException("UNKNOWN COMMAND: I do not understand what you're saying");

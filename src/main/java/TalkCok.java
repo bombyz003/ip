@@ -1,103 +1,88 @@
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class TalkCok {
-    public static void main(String[] args) {
 
-        System.out.println("____________________________");
-        System.out.println("Hi, I'm TalkCok!");
+    private Ui ui;
+    private final Store store = new Store("data/TalkCok.txt");
+    private final Parser parser;
+    private final TaskList tasks;
 
-        TaskList tasks = Store.loadTasks();
-        Scanner scan = new Scanner(System.in);
-        String input;
+    public TalkCok() {
+        this.ui = new Ui();
+        this.parser = new Parser();
+        this.tasks = store.loadTasks();
+    }
 
-        while (true) {
-            input = scan.nextLine();
-            int c = 1;
-            if (input.equalsIgnoreCase("list")) {
-                System.out.println("Here's your tasks\n_____________________________");
-                for (int i = 0; i < tasks.size(); i++) {
-                    System.out.println(c + "." + " " + tasks.getTask(i).toString());
-                    c++;
+    public void run() {
+        ui.openingMessage();
+        ui.showLoadingFinish(tasks.size());
+        boolean stop = false;
+
+        while (!stop) {
+            String input = ui.readCommand();
+
+            try {
+                AfterParse command = parser.parse(input);
+                String commandStr = command.getKeyword();
+                String desc = command.getDescription();
+
+                switch (commandStr) {
+                    case "list":
+                        ui.listTask(tasks);
+                        break;
+
+                    case "todo":
+                        Task todo = new ToDo(desc);
+                        tasks.addTask(todo);
+                        store.save(tasks);
+                        ui.showTaskAdded(todo, tasks.size());
+                        break;
+
+                    case "deadline":
+                        LocalDateTime by = DTParser.parse(command.getDate1());
+                        Task dt = new Deadline(desc, by);
+                        tasks.addTask(dt);
+                        store.save(tasks);
+                        ui.showTaskAdded(dt, tasks.size());
+                        break;
+
+                    case "event":
+                        LocalDateTime start = DTParser.parse(command.getDate1());
+                        LocalDateTime end = DTParser.parse(command.getDate2());
+                        Task et = new Event(desc, start, end);
+                        tasks.addTask(et);
+                        store.save(tasks);
+                        ui.showTaskAdded(et, tasks.size());
+                        break;
+
+                    case "delete":
+                        int toDelete = command.getIndex();
+                        tasks.deleteTask(toDelete);
+                        store.save(tasks);
+                        ui.showTaskDeleted(tasks.getTask(toDelete), tasks.size());
+                        break;
+
+                    case "mark":
+                        int m = command.getIndex();
+                        tasks.markTask(m);
+                        store.save(tasks);
+                        ui.showMarked(tasks.getTask(m));
+                        break;
+
+                    case "bye":
+                        ui.exitMessage();
+                        store.save(tasks);
+                        stop = true;
+                        break;
                 }
-                continue;
+
+            } catch (Exception e) {
+                ui.errorMessage(e.getMessage());
             }
-                
-            if (input.toLowerCase().startsWith("mark ")) {
-                String N = input.substring(5).trim();
-                int taskNum = Integer.parseInt(N);
-                Task tt = tasks.getTask(taskNum - 1);
-                tt.finTask();
-                System.out.println("good job bro, this task is marked done:");
-                System.out.println(tt.marker() + " " + tt.desc);
-                Store.save(tasks);
-            }
-
-            else if (input.toLowerCase().startsWith("todo ")) {       //td task
-                String s = input.substring(5);
-                if (s.isEmpty()) {
-                    throw new ShittyInputException("You tryna do nothing? Task description is empty, invalid.");
-                }
-                ToDo t = new ToDo(input);
-                System.out.println("Task added: " + t.toString());
-                tasks.addTask(t);
-                System.out.println("you now have " + tasks.size() + " tasks in the list.");
-                Store.save(tasks);
-            }
-
-            else if (input.toLowerCase().startsWith("deadline ")) {      //deadline task
-                String abc = input.substring(9);
-                String[] parts = abc.split("/by");
-                if (parts.length < 2) {
-                    System.out.println("Error: Follow format: deadline (task) /by (date)");
-                    continue;
-                }
-                String description = parts[0].trim();
-                LocalDateTime by = DTParser.parse(parts[1].trim());
-                if (description.isEmpty()) {
-                    throw new ShittyInputException("Task description or deadline missing, or both");
-                }
-                Deadline dt = new Deadline(description, by);
-                System.out.println("ok, task added: " + dt.toString());
-                tasks.addTask(dt);
-                System.out.println("you now have " + tasks.size() + " tasks in the list.");
-                Store.save(tasks);
-            }
-
-            else if (input.toLowerCase().startsWith("event ")) {       //event task
-                String abc = input.substring(6);
-                String[] parts = abc.split("from|to", 3);
-                if (parts.length != 3) {
-                    throw new ShittyInputException("Format error. Accepted format:\n" +
-                            "event [task] from [date time] to [date time]");
-                }
-                String description = parts[0].trim();
-                LocalDateTime start = DTParser.parse(parts[1]);
-                LocalDateTime end = DTParser.parse(parts[2]);
-                Event et = new Event(description, start, end);
-                System.out.println("ok, task added: " + et.toString());
-                tasks.addTask(et);
-                System.out.println("you now have " + tasks.size() + " tasks in the list.");
-                Store.save(tasks);
-            } else if (input.startsWith("delete ")) {       //delete the task
-                String s = input.substring(7).trim();
-                int toDelete = Integer.parseInt(s);
-                if (toDelete <= 0) throw new ShittyInputException("Invalid task number retard.");
-                else {
-                    Task deleted = tasks.getTask(toDelete - 1);
-                    tasks.deleteTask(toDelete - 1);
-                    System.out.println("Task removed: " + deleted.toString());
-                    Store.save(tasks);
-                    System.out.println("You now have " + tasks.size() + " tasks in the list");
-                }
-            } else if (input.equalsIgnoreCase("bye")) {
-                break;
-            }
-            else System.out.println("UNKNOWN COMMAND: I don't know what you're saying");
         }
+    }
 
-        System.out.println("Aw man, bye bye!");
-        scan.close();
+    public static void main(String[] args) {
+        new TalkCok().run();
     }
 }

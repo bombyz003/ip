@@ -6,9 +6,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Store {
-    private static final String FILE_PATH = "data/TalkCok.txt";
+    private String FILE_PATH;
+    Ui msg = new Ui();
 
-    public static void confirmDirectoryExist() {
+    public Store(String FILE_PATH) {
+        this.FILE_PATH = FILE_PATH;
+    }
+
+    public void confirmDirectoryExist() {
         File f = new File("data");
         if (!f.exists()) {
             boolean created = f.mkdirs();
@@ -20,10 +25,10 @@ public class Store {
         }
     }
 
-    public static void save(TaskList tasks) {
+    public void save(TaskList tasks) {
         try {
             confirmDirectoryExist();
-            PrintWriter pw = new PrintWriter(FILE_PATH);
+            PrintWriter pw = new PrintWriter(this.FILE_PATH);
 
             for (int i = 0; i < tasks.size(); i++) {
                 Task ts = tasks.getTask(i);
@@ -34,17 +39,17 @@ public class Store {
             System.out.println("::: Tasks saved :::");
 
         } catch (IOException e) {
-            System.out.println("Error saving tasks: " + e.getMessage());
+            msg.errorMessage(e.getMessage());
         }
     }
 
-    public static TaskList loadTasks() {
+    public TaskList loadTasks() {
         ArrayList<Task> tasks = new ArrayList<>();
 
         try {
-            File file = new File(FILE_PATH);
+            File file = new File(this.FILE_PATH);
             if (!file.exists()) {
-                System.out.println("No saved tasks, new file created.");
+                msg.showLoadingError();
                 return new TaskList(tasks);
             }
 
@@ -58,7 +63,6 @@ public class Store {
             }
 
             fScanner.close();
-            System.out.println("Loaded " + tasks.size() + " tasks.");
 
         } catch (IOException e) {
             System.out.println("Error loading: " + e.getMessage());

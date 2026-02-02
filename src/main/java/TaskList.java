@@ -1,4 +1,3 @@
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,14 +32,7 @@ public class TaskList {
         return tasks.isEmpty();
     }
 
-    public void markTask(int index, boolean isDone) throws IndexOutOfBoundsException {
-        Task task = tasks.get(index);
-        if (isDone) {
-            task.finTask();
-        }
-    }
-
-    public void markAsDone(int index) throws IndexOutOfBoundsException {
-        markTask(index, true);
+    public void markTask(int index) throws IndexOutOfBoundsException {
+        tasks.get(index).finTask();
     }
 }

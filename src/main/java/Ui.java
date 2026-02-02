@@ -1,11 +1,14 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ui {
-    private Scanner scanner;
+    private final Scanner scanner;
 
     public Ui() {
         this.scanner = new Scanner(System.in);
+    }
+
+    public String readCommand() {
+        return scanner.nextLine().trim();
     }
 
     public void openingMessage() {
@@ -27,17 +30,17 @@ public class Ui {
         System.out.println("You now have " + totalTasks + " tasks in the list.");
     }
 
-    public void listTask(ArrayList<Task> tasks) {
+    public void listTask(TaskList tasks) {
         if (tasks.isEmpty()) {
             System.out.println("Your task list is empty!");
         }
         System.out.println("Here are your tasks:\n");
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println((i + 1) + ". " + tasks.get(i));
+            System.out.println((i + 1) + ". " + tasks.getTask(i));
         }
     }
 
-    public void markTask(Task task) {
+    public void showMarked(Task task) {
         System.out.println("Great. This task is marked as done:");
         System.out.println(task.marker() + " " + task.desc);
     }
@@ -46,11 +49,11 @@ public class Ui {
         System.out.println("No saved tasks, new file created.");
     }
 
-    public void errorMessage(String message) {
-        System.out.println("Error: " + message);
+    public void showLoadingFinish(int size) {
+        System.out.println("Successfully loaded: " + size + " tasks.");
     }
 
-    public void showSavingError() {
-        System.out.println("Cannot save tasks to file");
+    public void errorMessage(String message) {
+        System.out.println("Error: " + message);
     }
 }
