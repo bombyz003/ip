@@ -14,7 +14,13 @@ public class DTParser {
             DateTimeFormatter.ofPattern("dd/M/yyyy HHmm"),
 
             DateTimeFormatter.ofPattern("yyyy-M-d HHmm"),
-            DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm")
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"),
+            DateTimeFormatter.ofPattern("dd-M-yyyy HHmm"),
+            DateTimeFormatter.ofPattern("d-M-yyyy HHmm"),
+
+            DateTimeFormatter.ofPattern("d/M/yyyy h:mma"),
+            DateTimeFormatter.ofPattern("yyyy-MM-dd h:mma"),
+            DateTimeFormatter.ofPattern("d/M/yyyy hmma")
     );
 
     private static final List<DateTimeFormatter> DATE_FORMATTERS = Arrays.asList(
@@ -22,7 +28,8 @@ public class DTParser {
             DateTimeFormatter.ofPattern("dd/MM/yyyy"),
             DateTimeFormatter.ofPattern("dd/M/yyyy"),
             DateTimeFormatter.ofPattern("yyyy-M-d"),
-            DateTimeFormatter.ofPattern("yyyy-MM-dd")
+            DateTimeFormatter.ofPattern("yyyy-MM-dd"),
+            DateTimeFormatter.ofPattern("d-M-yyyy")
     );
 
     public static LocalDateTime parse(String dateTime) throws DateTimeParseException {
@@ -50,12 +57,14 @@ public class DTParser {
         }
 
         throw new DateTimeParseException(
-                "Cannot parse: " + dateTime + ", incorrect formatting.",
+                "Cannot parse: " + dateTime + ", incorrect formatting.\n" +
+                        "Check that date is included minimally. Use only d m y formats " +
+                        "such as 25/2/2026 or 2026-2-25",
                 dateTime, 0);
     }
 
     public static String formatForDisplay(LocalDateTime dateTime) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy, h:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy, h:mma");
         return dateTime.format(formatter);
     }
 

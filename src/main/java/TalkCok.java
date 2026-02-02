@@ -41,8 +41,8 @@ public class TalkCok {
                 }
                 ToDo t = new ToDo(input);
                 System.out.println("Task added: " + t.toString());
-                System.out.println("you now have " + tasks.size() + " tasks in the list.");
                 tasks.add(t);
+                System.out.println("you now have " + tasks.size() + " tasks in the list.");
                 Store.save(tasks);
             }
 
@@ -60,24 +60,25 @@ public class TalkCok {
                 }
                 Deadline dt = new Deadline(description, by);
                 System.out.println("ok, task added: " + dt.toString());
-                System.out.println("you now have " + tasks.size() + " tasks in the list.");
                 tasks.add(dt);
+                System.out.println("you now have " + tasks.size() + " tasks in the list.");
                 Store.save(tasks);
             }
 
             else if (input.toLowerCase().startsWith("event ")) {       //event task
                 String abc = input.substring(6);
-                String[] parts = abc.split("/from|/to", 3);
+                String[] parts = abc.split("from|to", 3);
                 if (parts.length != 3) {
-                    throw new ShittyInputException("Follow format: event (task) /from __ /to __");
+                    throw new ShittyInputException("Format error. Accepted format:\n" +
+                            "event [task] from [date time] to [date time]");
                 }
                 String description = parts[0].trim();
                 LocalDateTime start = DTParser.parse(parts[1]);
                 LocalDateTime end = DTParser.parse(parts[2]);
                 Event et = new Event(description, start, end);
                 System.out.println("ok, task added: " + et.toString());
-                System.out.println("you now have " + tasks.size() + " tasks in the list.");
                 tasks.add(et);
+                System.out.println("you now have " + tasks.size() + " tasks in the list.");
                 Store.save(tasks);
             } else if (input.startsWith("delete ")) {       //delete the task
                 String s = input.substring(7).trim();

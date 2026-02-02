@@ -12,12 +12,14 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E]" + this.marker() + super.toString() + " (from: " + start + " to: " + end + ")";
+        return "[E]" + this.marker() + super.toString() + " (from " +
+                DTParser.formatForDisplay(start) + " to " +
+                DTParser.formatForDisplay(end) + ")";
     }
 
     @Override
     public String toFileString() {
         return "E | " + (this.isDone ? "1" : "0") + " | " + desc + " | " +
-                DTParser.formatForFile(start) + "-" + DTParser.formatForFile(end);
+                DTParser.formatForFile(start) + "to" + DTParser.formatForFile(end);
     }
 }

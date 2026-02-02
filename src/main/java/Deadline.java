@@ -10,7 +10,8 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[D]" + this.marker() + super.toString() + " (by: " + by + ")";
+        return "[D]" + this.marker() + super.toString() + " (by: " +
+                DTParser.formatForDisplay(by)+ ")";
     }
 
     @Override
