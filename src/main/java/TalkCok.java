@@ -8,7 +8,7 @@ public class TalkCok {
         System.out.println("____________________________");
         System.out.println("Hi, I'm TalkCok!");
 
-        ArrayList<Task> tasks = Store.loadTasks();
+        TaskList tasks = Store.loadTasks();
         Scanner scan = new Scanner(System.in);
         String input;
 
@@ -17,8 +17,8 @@ public class TalkCok {
             int c = 1;
             if (input.equalsIgnoreCase("list")) {
                 System.out.println("Here's your tasks\n_____________________________");
-                for (Task listItem: tasks) {
-                    System.out.println(c + "." + " " + listItem.toString());
+                for (int i = 0; i < tasks.size(); i++) {
+                    System.out.println(c + "." + " " + tasks.getTask(i).toString());
                     c++;
                 }
                 continue;
@@ -27,7 +27,7 @@ public class TalkCok {
             if (input.toLowerCase().startsWith("mark ")) {
                 String N = input.substring(5).trim();
                 int taskNum = Integer.parseInt(N);
-                Task tt = tasks.get(taskNum - 1);
+                Task tt = tasks.getTask(taskNum - 1);
                 tt.finTask();
                 System.out.println("good job bro, this task is marked done:");
                 System.out.println(tt.marker() + " " + tt.desc);
@@ -41,7 +41,7 @@ public class TalkCok {
                 }
                 ToDo t = new ToDo(input);
                 System.out.println("Task added: " + t.toString());
-                tasks.add(t);
+                tasks.addTask(t);
                 System.out.println("you now have " + tasks.size() + " tasks in the list.");
                 Store.save(tasks);
             }
@@ -60,7 +60,7 @@ public class TalkCok {
                 }
                 Deadline dt = new Deadline(description, by);
                 System.out.println("ok, task added: " + dt.toString());
-                tasks.add(dt);
+                tasks.addTask(dt);
                 System.out.println("you now have " + tasks.size() + " tasks in the list.");
                 Store.save(tasks);
             }
@@ -77,7 +77,7 @@ public class TalkCok {
                 LocalDateTime end = DTParser.parse(parts[2]);
                 Event et = new Event(description, start, end);
                 System.out.println("ok, task added: " + et.toString());
-                tasks.add(et);
+                tasks.addTask(et);
                 System.out.println("you now have " + tasks.size() + " tasks in the list.");
                 Store.save(tasks);
             } else if (input.startsWith("delete ")) {       //delete the task
@@ -85,8 +85,8 @@ public class TalkCok {
                 int toDelete = Integer.parseInt(s);
                 if (toDelete <= 0) throw new ShittyInputException("Invalid task number retard.");
                 else {
-                    Task deleted = tasks.get(toDelete - 1);
-                    tasks.remove(toDelete - 1);
+                    Task deleted = tasks.getTask(toDelete - 1);
+                    tasks.deleteTask(toDelete - 1);
                     System.out.println("Task removed: " + deleted.toString());
                     Store.save(tasks);
                     System.out.println("You now have " + tasks.size() + " tasks in the list");

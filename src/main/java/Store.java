@@ -2,7 +2,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -21,12 +20,13 @@ public class Store {
         }
     }
 
-    public static void save(ArrayList<Task> tasks) {
+    public static void save(TaskList tasks) {
         try {
             confirmDirectoryExist();
             PrintWriter pw = new PrintWriter(FILE_PATH);
 
-            for (Task ts : tasks) {
+            for (int i = 0; i < tasks.size(); i++) {
+                Task ts = tasks.getTask(i);
                 pw.println(ts.toFileString());
             }
 
@@ -38,14 +38,14 @@ public class Store {
         }
     }
 
-    public static ArrayList<Task> loadTasks() {
+    public static TaskList loadTasks() {
         ArrayList<Task> tasks = new ArrayList<>();
 
         try {
             File file = new File(FILE_PATH);
             if (!file.exists()) {
                 System.out.println("No saved tasks, new file created.");
-                return tasks;
+                return new TaskList(tasks);
             }
 
             Scanner fScanner = new Scanner(file);
@@ -63,7 +63,7 @@ public class Store {
         } catch (IOException e) {
             System.out.println("Error loading: " + e.getMessage());
         }
-        return tasks;
+        return new TaskList(tasks);
     }
 
     public static Task parseTask(String line) {
