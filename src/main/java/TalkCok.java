@@ -1,0 +1,98 @@
+import java.util.*;
+
+public class TalkCok {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        String input;
+        List<Task> ls = new ArrayList<>();
+        int x = 0;
+
+        System.out.println("____________________________");
+        System.out.println("Hi, I'm TalkCok!");
+        System.out.println("What do ya have for me today? (enter bye to quit)\n");
+
+        while (true) {
+            input = scan.nextLine();
+            int c = 1;
+            if (input.equalsIgnoreCase("list")) {
+                System.out.println("Here's your tasks\n_____________________________");
+                for (Task listItem: ls) {
+                    System.out.println(c + "." + " " + listItem.toString());
+                    c++;
+                }
+                continue;
+            }
+                
+            if (input.toLowerCase().startsWith("mark ")) {
+                String N = input.substring(5).trim();
+                int taskNum = Integer.parseInt(N);
+                Task tt = ls.get(taskNum - 1);
+                tt.finTask();
+                System.out.println("good job bro, this task is marked done:");
+                System.out.println(tt.marker() + " " + tt.desc);
+            }
+
+            else if (input.toLowerCase().startsWith("todo ")) {       //td task
+                String s = input.substring(5);
+                if (s.isEmpty()) {
+                    throw new ShittyInputException("You tryna do nothing? Task description is empty, invalid.");
+                }
+                ToDo t = new ToDo(input);
+                x++;
+                System.out.println("ok, task added: " + t.toString());
+                System.out.println("you now have " + x + " tasks in the list.");
+                ls.add(t);
+            }
+            else if (input.toLowerCase().startsWith("deadline ")) {      //deadline task
+                String abc = input.substring(9);
+                String[] parts = abc.split("/by");
+                if (parts.length < 2) {
+                    System.out.println("Error: Follow format: deadline (task) /by (date)");
+                    continue;
+                }
+                String description = parts[0].trim();
+                String by = parts[1].trim();
+                if (description.isEmpty() || by.isEmpty()) {
+                    throw new ShittyInputException("Task description or deadline missing, or both");
+                }
+                Deadline dt = new Deadline(description, by);
+                x++;
+                System.out.println("ok, task added: " + dt.toString());
+                System.out.println("you now have " + x + " tasks in the list.");
+                ls.add(dt);
+            }
+            else if (input.toLowerCase().startsWith("event ")) {       //event task
+                String abc = input.substring(6);
+                String[] parts = abc.split("/from|/to", 3);
+                if (parts.length != 3) {
+                    throw new ShittyInputException("Follow format: event (task) /from __ /to __");
+                }
+                String description = parts[0].trim();
+                String start = parts[1].trim();
+                String end = parts[2].trim();
+                Event et = new Event(description, start, end);
+                x++;
+                System.out.println("ok, task added: " + et.toString());
+                System.out.println("you now have " + x + " tasks in the list.");
+                ls.add(et);
+            } else if (input.startsWith("delete ")) {       //delete the task
+                String s = input.substring(7).trim();
+                int toDelete = Integer.parseInt(s);
+                if (toDelete <= 0) throw new ShittyInputException("Invalid task number retard.");
+                else {
+                    Task deleted = ls.get(toDelete - 1);
+                    ls.remove(toDelete - 1);
+                    System.out.println("Task removed: " + deleted.toString());
+                    x--;
+                    System.out.println("You now have " + x + " tasks in the list");
+                }
+            } else if (input.equalsIgnoreCase("bye")) {
+                break;
+            }
+            else System.out.println("UNKNOWN COMMAND: I don't know what you're saying");
+        }
+
+        System.out.println("Aw man, bye bye!");
+        scan.close();
+    }
+}
