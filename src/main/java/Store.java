@@ -2,14 +2,18 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Store {
-    private static final String FILE_PATH = "data/TalkCok.txt";
+    private String FILE_PATH;
+    Ui msg = new Ui();
 
-    public static void confirmDirectoryExist() {
+    public Store(String FILE_PATH) {
+        this.FILE_PATH = FILE_PATH;
+    }
+
+    public void confirmDirectoryExist() {
         File f = new File("data");
         if (!f.exists()) {
             boolean created = f.mkdirs();
@@ -21,12 +25,13 @@ public class Store {
         }
     }
 
-    public static void save(ArrayList<Task> tasks) {
+    public void save(TaskList tasks) {
         try {
             confirmDirectoryExist();
-            PrintWriter pw = new PrintWriter(FILE_PATH);
+            PrintWriter pw = new PrintWriter(this.FILE_PATH);
 
-            for (Task ts : tasks) {
+            for (int i = 0; i < tasks.size(); i++) {
+                Task ts = tasks.getTask(i);
                 pw.println(ts.toFileString());
             }
 
@@ -34,18 +39,18 @@ public class Store {
             System.out.println("::: Tasks saved :::");
 
         } catch (IOException e) {
-            System.out.println("Error saving tasks: " + e.getMessage());
+            msg.errorMessage(e.getMessage());
         }
     }
 
-    public static ArrayList<Task> loadTasks() {
+    public TaskList loadTasks() {
         ArrayList<Task> tasks = new ArrayList<>();
 
         try {
-            File file = new File(FILE_PATH);
+            File file = new File(this.FILE_PATH);
             if (!file.exists()) {
-                System.out.println("No saved tasks, new file created.");
-                return tasks;
+                msg.showLoadingError();
+                return new TaskList(tasks);
             }
 
             Scanner fScanner = new Scanner(file);
@@ -58,12 +63,11 @@ public class Store {
             }
 
             fScanner.close();
-            System.out.println("Loaded " + tasks.size() + " tasks.");
 
         } catch (IOException e) {
             System.out.println("Error loading: " + e.getMessage());
         }
-        return tasks;
+        return new TaskList(tasks);
     }
 
     public static Task parseTask(String line) {
