@@ -1,3 +1,7 @@
+package taskclasses;
+
+import logic.DTParser;
+
 import java.time.LocalDateTime;
 
 public class Event extends Task {
@@ -19,7 +23,7 @@ public class Event extends Task {
 
     @Override
     public String toFileString() {
-        return "E | " + (this.isDone ? "1" : "0") + " | " + desc + " | " +
+        return "E | " + (this.isDone() ? "1" : "0") + " | " + getDesc() + " | " +
                 DTParser.formatForFile(start) + "to" + DTParser.formatForFile(end);
     }
 }

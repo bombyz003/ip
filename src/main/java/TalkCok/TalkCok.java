@@ -1,8 +1,18 @@
+package TalkCok;
+
 import java.time.LocalDateTime;
+import logic.AfterParse;
+import logic.DTParser;
+import logic.Parser;
+import logic.TaskList;
+import taskclasses.Deadline;
+import taskclasses.Event;
+import taskclasses.Task;
+import taskclasses.ToDo;
 
 public class TalkCok {
 
-    private Ui ui;
+    private final Ui ui;
     private final Store store = new Store("data/TalkCok.txt");
     private final Parser parser;
     private final TaskList tasks;

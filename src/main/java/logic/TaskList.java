@@ -1,5 +1,8 @@
+package logic;
+
 import java.util.ArrayList;
 import java.util.List;
+import taskclasses.Task;
 
 public class TaskList {
     private ArrayList<Task> tasks;
