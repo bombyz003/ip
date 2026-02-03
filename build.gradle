@@ -28,7 +28,7 @@ test {
 }
 
 application {
-    mainClass.set("TalkCok")
+    mainClass.set("TalkCok.TalkCok")
 }
 
 shadowJar {
