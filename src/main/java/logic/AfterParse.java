@@ -1,3 +1,5 @@
+package logic;
+
 public class AfterParse {
 
     private String keyword;

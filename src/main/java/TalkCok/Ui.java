@@ -1,3 +1,8 @@
+package TalkCok;
+
+import logic.TaskList;
+import taskclasses.Task;
+
 import java.util.Scanner;
 
 public class Ui {
@@ -21,12 +26,12 @@ public class Ui {
     }
 
     public void showTaskAdded(Task t, int totalTasks) {
-        System.out.println("Task added: " + t.toString());
+        System.out.println("taskclasses.Task added: " + t.toString());
         System.out.println("you now have " + totalTasks + " tasks in the list.");
     }
 
     public void showTaskDeleted(Task t, int totalTasks) {
-        System.out.println("Task removed: " + t.toString());
+        System.out.println("taskclasses.Task removed: " + t.toString());
         System.out.println("You now have " + totalTasks + " tasks in the list.");
     }
 
@@ -42,7 +47,7 @@ public class Ui {
 
     public void showMarked(Task task) {
         System.out.println("Great. This task is marked as done:");
-        System.out.println(task.marker() + " " + task.desc);
+        System.out.println(task.marker() + " " + task.getDesc());
     }
 
     public void showLoadingError() {

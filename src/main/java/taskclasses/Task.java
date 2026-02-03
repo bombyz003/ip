@@ -1,6 +1,8 @@
+package taskclasses;
+
 public class Task {
-    String desc;
-    boolean isDone;
+    private String desc;
+    private boolean isDone;
 
     public Task(String desc) {
         this.desc = desc;
@@ -13,6 +15,14 @@ public class Task {
 
     public void finTask() {
         this.isDone = true;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public boolean isDone() {
+        return isDone;
     }
 
     @Override

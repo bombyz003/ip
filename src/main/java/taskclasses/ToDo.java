@@ -1,3 +1,5 @@
+package taskclasses;
+
 public class ToDo extends Task {
 
     public ToDo(String name) {
@@ -11,6 +13,6 @@ public class ToDo extends Task {
 
     @Override
     public String toFileString() {
-        return "T | " + (this.isDone ? "1" : "0") + " | " + desc;
+        return "T | " + (this.isDone() ? "1" : "0") + " | " + getDesc();
     }
 }

@@ -1,6 +1,10 @@
+package logic;
+
+import TalkCok.ShittyInputException;
+
 public class Parser {
 
-    public AfterParse parse(String input) throws ShittyInputException{
+    public AfterParse parse(String input) throws ShittyInputException {
         if (input == null || input.trim().isEmpty()) {
             throw new ShittyInputException("Input is empty.");
         }
@@ -36,7 +40,7 @@ public class Parser {
 
             case "event":
                 if (!args.contains("from") || !args.contains("to")) {
-                    throw new ShittyInputException("Event must have both from and to.");
+                    throw new ShittyInputException("taskclasses.Event must have both from and to.");
                 }
 
                 String[] splitThree = args.split("from|to", 3);
@@ -49,7 +53,7 @@ public class Parser {
                 String to = splitThree[2].trim();
 
                 if (eventDesc.isEmpty()) {
-                    throw new ShittyInputException("Event description cannot be empty.");
+                    throw new ShittyInputException("taskclasses.Event description cannot be empty.");
                 }
                 return new AfterParse("event", eventDesc, from, to);
 
