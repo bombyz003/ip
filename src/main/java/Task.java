@@ -28,4 +28,8 @@ public class Task {
         }
         else return desc;
     }
+
+    public String toFileString() {
+        return "ok";
+    }
 }
