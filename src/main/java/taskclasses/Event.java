@@ -24,6 +24,6 @@ public class Event extends Task {
     @Override
     public String toFileString() {
         return "E | " + (this.isDone() ? "1" : "0") + " | " + getDesc() + " | " +
-                DTParser.formatForFile(start) + "to" + DTParser.formatForFile(end);
+                DTParser.formatForFile(start) + " to " + DTParser.formatForFile(end);
     }
 }

@@ -61,7 +61,7 @@ public class DTParser {
         throw new DateTimeParseException(
                 "Cannot parse: " + dateTime + ", incorrect formatting.\n" +
                         "Check that date is included minimally. Use only d m y formats " +
-                        "such as 25/2/2026 or 2026-2-25",
+                        "such as 25/2/2026 or 2026-2-25 1:25PM",
                 dateTime, 0);
     }
 

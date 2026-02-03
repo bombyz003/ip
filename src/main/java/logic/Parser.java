@@ -13,7 +13,7 @@ public class Parser {
         String keyword = parts[0].trim();
         String args = parts.length > 1 ? parts[1] : "";
 
-        switch (keyword) {
+        switch (keyword.toLowerCase()) {
             case "list":
                 return new AfterParse("list", args);
 
@@ -34,13 +34,13 @@ public class Parser {
                             "deadline [task] /by [deadline]");
                 }
 
-                String deadlineDesc = parts[0].trim();
-                String by = parts[1].trim();
+                String deadlineDesc = splitTwo[0].trim();
+                String by = splitTwo[1].trim();
                 return new AfterParse("deadline", deadlineDesc, by);
 
             case "event":
                 if (!args.contains("from") || !args.contains("to")) {
-                    throw new ShittyInputException("taskclasses.Event must have both from and to.");
+                    throw new ShittyInputException("Event must have both from and to.");
                 }
 
                 String[] splitThree = args.split("from|to", 3);
@@ -53,7 +53,7 @@ public class Parser {
                 String to = splitThree[2].trim();
 
                 if (eventDesc.isEmpty()) {
-                    throw new ShittyInputException("taskclasses.Event description cannot be empty.");
+                    throw new ShittyInputException("Event description cannot be empty.");
                 }
                 return new AfterParse("event", eventDesc, from, to);
 

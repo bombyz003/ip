@@ -26,12 +26,12 @@ public class Ui {
     }
 
     public void showTaskAdded(Task t, int totalTasks) {
-        System.out.println("taskclasses.Task added: " + t.toString());
+        System.out.println("Task added: " + t.toString());
         System.out.println("you now have " + totalTasks + " tasks in the list.");
     }
 
     public void showTaskDeleted(Task t, int totalTasks) {
-        System.out.println("taskclasses.Task removed: " + t.toString());
+        System.out.println("Task removed: " + t.toString());
         System.out.println("You now have " + totalTasks + " tasks in the list.");
     }
 
