@@ -1,5 +1,8 @@
 package taskclasses;
 
+/**
+ * Tasks classified as to do.
+ */
 public class ToDo extends Task {
 
     public ToDo(String name) {

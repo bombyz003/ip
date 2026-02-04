@@ -1,5 +1,8 @@
 package taskclasses;
 
+/**
+ * Parent class of all the possible task types.
+ */
 public class Task {
     private String desc;
     private boolean isDone;

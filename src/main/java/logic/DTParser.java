@@ -7,6 +7,9 @@ import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Parses only date and time.
+ */
 public class DTParser {
 
     private static final List<DateTimeFormatter> FORMATTERS = Arrays.asList(
@@ -34,6 +37,13 @@ public class DTParser {
             DateTimeFormatter.ofPattern("d-M-yyyy")
     );
 
+    /**
+     * Returns a date and time specified in a task.
+     *
+     * @param dateTime A date/time string of a task from the user input.
+     * @return Date and time.
+     * @throws DateTimeParseException if no matching format is found from the user input.
+     */
     public static LocalDateTime parse(String dateTime) throws DateTimeParseException {
         dateTime = dateTime.trim();
 
@@ -65,16 +75,33 @@ public class DTParser {
                 dateTime, 0);
     }
 
+    /**
+     * Formats LocalDateTime to a nice display string.
+     *
+     * @param dateTime date/time.
+     */
     public static String formatForDisplay(LocalDateTime dateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy, h:mma");
         return dateTime.format(formatter);
     }
 
+    /**
+     * Formats LocalDateTime for saving task to file.
+     *
+     * @param dateTime date/time.
+     * @return Date and time string
+     */
     public static String formatForFile(LocalDateTime dateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
         return dateTime.format(formatter);
     }
 
+    /**
+     * Parses from file format back to LocalDateTime.
+     *
+     * @param s Date and time string.
+     * @return LocalDateTime.
+     */
     public static LocalDateTime parseFromFile(String s) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
         return LocalDateTime.parse(s, formatter);
