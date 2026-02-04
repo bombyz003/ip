@@ -44,16 +44,16 @@ public class TalkCok {
                     case "todo":
                         Task todo = new ToDo(desc);
                         tasks.addTask(todo);
-                        store.save(tasks);
                         ui.showTaskAdded(todo, tasks.size());
+                        store.save(tasks);
                         break;
 
                     case "deadline":
                         LocalDateTime by = DTParser.parse(command.getDate1());
                         Task dt = new Deadline(desc, by);
                         tasks.addTask(dt);
-                        store.save(tasks);
                         ui.showTaskAdded(dt, tasks.size());
+                        store.save(tasks);
                         break;
 
                     case "event":
@@ -61,22 +61,22 @@ public class TalkCok {
                         LocalDateTime end = DTParser.parse(command.getDate2());
                         Task et = new Event(desc, start, end);
                         tasks.addTask(et);
-                        store.save(tasks);
                         ui.showTaskAdded(et, tasks.size());
+                        store.save(tasks);
                         break;
 
                     case "delete":
                         int toDelete = command.getIndex();
                         tasks.deleteTask(toDelete);
-                        store.save(tasks);
                         ui.showTaskDeleted(tasks.getTask(toDelete), tasks.size());
+                        store.save(tasks);
                         break;
 
                     case "mark":
                         int m = command.getIndex();
                         tasks.markTask(m);
-                        store.save(tasks);
                         ui.showMarked(tasks.getTask(m));
+                        store.save(tasks);
                         break;
 
                     case "bye":

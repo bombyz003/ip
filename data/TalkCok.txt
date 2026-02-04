@@ -1,4 +1,4 @@
-T | 0 | todo take a shit
 D | 0 | get alcohol | 2026-02-14 2359
-E | 0 | big leagues | 2026-02-17 2359to2026-02-28 2359
+E | 0 | big leagues | 2026-02-17 2359 to 2026-02-28 2359
 D | 0 | gym | 2026-02-16 2359
+T | 0 | say hi
