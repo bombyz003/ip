@@ -57,6 +57,6 @@ public class TaskList {
      * @throws IndexOutOfBoundsException if index < 0 or index > task size.
      */
     public void markTask(int index) throws IndexOutOfBoundsException {
-        tasks.get(index).finTask();
+        tasks.get(index).finishTask();
     }
 }

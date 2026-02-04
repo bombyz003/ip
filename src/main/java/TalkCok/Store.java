@@ -120,7 +120,7 @@ public class Store {
             }
 
             if (task != null && isDone) {
-                task.finTask();
+                task.finishTask();
             }
             return task;
 
