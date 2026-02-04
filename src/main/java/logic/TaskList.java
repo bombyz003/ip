@@ -38,4 +38,14 @@ public class TaskList {
     public void markTask(int index) throws IndexOutOfBoundsException {
         tasks.get(index).finTask();
     }
+
+    public List<Task> findTasks(String toFind) {
+        List<Task> found = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.getDesc().toLowerCase().contains(toFind.toLowerCase())) {
+                found.add(task);
+            }
+        }
+        return found;
+    }
 }
