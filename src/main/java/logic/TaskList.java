@@ -36,6 +36,6 @@ public class TaskList {
     }
 
     public void markTask(int index) throws IndexOutOfBoundsException {
-        tasks.get(index).finTask();
+        tasks.get(index).finishTask();
     }
 }

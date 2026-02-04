@@ -13,7 +13,7 @@ public class Task {
         return (this.isDone ? "[X]" : "[ ]");
     }
 
-    public void finTask() {
+    public void finishTask() {
         this.isDone = true;
     }
 

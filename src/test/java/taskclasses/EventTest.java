@@ -17,7 +17,7 @@ public class EventTest {
         AfterParse ap = p.parse(input);
         Event event = new Event(ap.getDescription(),
                 DTParser.parse(ap.getDate1()), DTParser.parse(ap.getDate2()));
-        event.finTask();
+        event.finishTask();
         assertEquals(toTest, event.toFileString());
     }
 }

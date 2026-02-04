@@ -12,8 +12,8 @@ public class AfterParse {
         this.description = description;
     }
 
-    public AfterParse(String commandType, String description, String date1) {
-        this(commandType, description);
+    public AfterParse(String keyword, String description, String date1) {
+        this(keyword, description);
         this.date1 = date1;
     }
 
