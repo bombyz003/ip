@@ -1,6 +1,8 @@
 package TalkCok;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
 import logic.AfterParse;
 import logic.DTParser;
 import logic.Parser;
@@ -81,6 +83,11 @@ public class TalkCok {
                         tasks.markTask(m);
                         ui.showMarked(tasks.getTask(m));
                         store.save(tasks);
+                        break;
+
+                    case "find":
+                        List<Task> tl = tasks.findTasks(desc);
+                        ui.showFound(tl, desc);
                         break;
 
                     case "bye":

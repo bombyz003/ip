@@ -3,6 +3,7 @@ package TalkCok;
 import logic.TaskList;
 import taskclasses.Task;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Ui {
@@ -48,6 +49,19 @@ public class Ui {
     public void showMarked(Task task) {
         System.out.println("Great. This task is marked as done:");
         System.out.println(task.marker() + " " + task.getDesc());
+    }
+
+    public void showFound(List<Task> ta, String toFind) {
+        if (ta.isEmpty()) {
+            System.out.println("No tasks found containing: \"" + toFind + "\"");
+            return;
+        }
+        System.out.println("____________________________");
+        System.out.println("Tasks found:");
+        for (int i = 0; i < ta.size(); i++) {
+            System.out.println((i + 1) + ". " + ta.get(i));
+        }
+        System.out.println("____________________________");
     }
 
     public void showLoadingError() {

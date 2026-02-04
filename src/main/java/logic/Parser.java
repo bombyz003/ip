@@ -71,6 +71,12 @@ public class Parser {
                 int toDelete = Integer.parseInt(args.trim()) - 1;
                 return new AfterParse("delete", String.valueOf(toDelete));
 
+            case "find":
+                if (args.trim().isEmpty()) {
+                    throw new ShittyInputException("Keyword to find is empty.");
+                }
+                return new AfterParse("find", args.trim());
+
             case "bye":
                 return new AfterParse("bye", args);
 
