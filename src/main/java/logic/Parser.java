@@ -2,8 +2,18 @@ package logic;
 
 import TalkCok.ShittyInputException;
 
+/**
+ * Parses input from user into executable commands.
+ */
 public class Parser {
 
+    /**
+     * Returns an AfterParse object that holds details about the task.
+     *
+     * @param input User input.
+     * @return AfterParse object.
+     * @throws ShittyInputException if there is no input, command in the wrong format or wrong command.
+     */
     public AfterParse parse(String input) throws ShittyInputException {
         if (input == null || input.trim().isEmpty()) {
             throw new ShittyInputException("Input is empty.");

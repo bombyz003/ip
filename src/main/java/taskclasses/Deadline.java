@@ -4,6 +4,9 @@ import logic.DTParser;
 
 import java.time.LocalDateTime;
 
+/**
+ * Tasks classified as to do.
+ */
 public class Deadline extends Task {
     LocalDateTime by;
 

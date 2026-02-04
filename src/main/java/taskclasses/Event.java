@@ -4,6 +4,9 @@ import logic.DTParser;
 
 import java.time.LocalDateTime;
 
+/**
+ * Tasks classified as to event.
+ */
 public class Event extends Task {
     LocalDateTime start;
     LocalDateTime end;

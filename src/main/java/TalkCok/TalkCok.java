@@ -23,6 +23,10 @@ public class TalkCok {
         this.tasks = store.loadTasks();
     }
 
+    /**
+     * Runs the chatbot.
+     * This method controls the execution flow of the chatbot.
+     */
     public void run() {
         ui.openingMessage();
         ui.showLoadingFinish(tasks.size());
@@ -92,6 +96,13 @@ public class TalkCok {
         }
     }
 
+    /**
+     * The entry point of the chatbot application.
+     * This method creates an instance of TalkCok and starts the chatbot by
+     * invoking the run method.
+     *
+     * @param args Command line arguments (not used).
+     */
     public static void main(String[] args) {
         new TalkCok().run();
     }

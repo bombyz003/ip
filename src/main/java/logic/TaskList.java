@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import taskclasses.Task;
 
+/**
+ * Represents a collection of tasks managed by the chatbot.
+ */
 public class TaskList {
     private ArrayList<Task> tasks;
 
@@ -15,10 +18,19 @@ public class TaskList {
         this.tasks = new ArrayList<>(loadedTasks);
     }
 
+    /**
+     * Adds a task to the list of tasks.
+     * @param task Task.
+     */
     public void addTask(Task task) {
         tasks.add(task);
     }
 
+    /**
+     * Deletes a task from the list of tasks.
+     *
+     * @param index Index of the task in the list.
+     */
     public Task deleteTask(int index) throws IndexOutOfBoundsException {
         return tasks.remove(index);
     }
@@ -27,6 +39,9 @@ public class TaskList {
         return tasks.get(index);
     }
 
+    /**
+     * Returns the number of tasks in the list.
+     */
     public int size() {
         return tasks.size();
     }
@@ -35,6 +50,12 @@ public class TaskList {
         return tasks.isEmpty();
     }
 
+    /**
+     * Marks a specified task as done.
+     *
+     * @param index Index of a task to be marked.
+     * @throws IndexOutOfBoundsException if index < 0 or index > task size.
+     */
     public void markTask(int index) throws IndexOutOfBoundsException {
         tasks.get(index).finTask();
     }

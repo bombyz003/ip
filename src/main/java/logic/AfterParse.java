@@ -1,5 +1,9 @@
 package logic;
 
+/**
+ * Container for parsed data.
+ * Objects of this class are returned by the parse method in the Parser class.
+ */
 public class AfterParse {
 
     private String keyword;

@@ -14,6 +14,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Handles persistent storage of tasks to local disk.
+ * Responsibilities:
+ * - Load tasks from the file when the program starts.
+ * - Save tasks to file when tasks are modified.
+ * - Parse file format into task objects.
+ */
 public class Store {
     private String FILE_PATH;
     Ui msg = new Ui();
@@ -52,6 +59,15 @@ public class Store {
         }
     }
 
+    /**
+     * Loads the tasks from the storage file.
+     * <p>
+     *  This method reads task data from the file specified by the file path,
+     *  parses each line into a {@link Task} object, and stores the tasks in
+     *  a {@link TaskList}. If the file does not exist or cannot be read,
+     *  an empty task list is returned.
+     * </p>
+     */
     public TaskList loadTasks() {
         ArrayList<Task> tasks = new ArrayList<>();
 
