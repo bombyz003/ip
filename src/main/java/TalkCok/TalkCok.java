@@ -103,6 +103,10 @@ public class TalkCok {
         }
     }
 
+    public String getResponse(String input) {
+        return "Heard: " + input;
+    }
+
     /**
      * The entry point of the chatbot application.
      * This method creates an instance of TalkCok and starts the chatbot by
