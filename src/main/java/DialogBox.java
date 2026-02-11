@@ -14,10 +14,9 @@ public class DialogBox extends HBox {
     @FXML
     private Label dialog;
 
-    public DialogBox(String s) {
+    public DialogBox(String s, boolean isUser) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource(
-                    "/view/DialogBox.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
             fxmlLoader.setController(this);
             fxmlLoader.setRoot(this);
             fxmlLoader.load();
@@ -26,6 +25,12 @@ public class DialogBox extends HBox {
         }
 
         dialog.setText(s);
+
+        if(isUser) {
+            this.setAlignment(Pos.CENTER_RIGHT);
+        } else {
+            this.setAlignment(Pos.CENTER_LEFT);
+        }
     }
 
     private void flip() {
@@ -36,12 +41,12 @@ public class DialogBox extends HBox {
     }
 
     public static DialogBox getUserDialog(String s) {
-        var db = new DialogBox(s);
+        var db = new DialogBox(s, true);
         db.flip();
         return db;
     }
 
     public static DialogBox getReply(String s) {
-        return new DialogBox(s);
+        return new DialogBox(s, false);
     }
 }
