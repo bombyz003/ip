@@ -1,3 +1,5 @@
+package GUI;
+
 import TalkCok.TalkCok;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

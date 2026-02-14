@@ -15,7 +15,7 @@ import taskclasses.ToDo;
 public class TalkCok {
 
     private final Ui ui;
-    private final Store store = new Store("data/TalkCok.txt");
+    private final Storage store = new Storage("data/TalkCok.txt");
     private final Parser parser;
     private final TaskList tasks;
 
@@ -26,95 +26,70 @@ public class TalkCok {
     }
 
     /**
-     * Runs the chatbot.
-     * This method controls the execution flow of the chatbot.
+     * Responses of the chatbot in string datatype, based on user input.
+     * @param input User's input.
      */
-    public void run() {
-        ui.openingMessage();
-        ui.showLoadingFinish(tasks.size());
-        boolean stop = false;
+    public String getResponse(String input) {
 
-        while (!stop) {
-            String input = ui.readCommand();
+        try {
+            AfterParse command = parser.parse(input);
+            String commandStr = command.getKeyword();
+            String desc = command.getDescription();
 
-            try {
-                AfterParse command = parser.parse(input);
-                String commandStr = command.getKeyword();
-                String desc = command.getDescription();
+            switch (commandStr) {
+                case "list":
+                    return ui.formatListTask(tasks);
 
-                switch (commandStr) {
-                    case "list":
-                        ui.listTask(tasks);
-                        break;
+                case "todo":
+                    Task todo = new ToDo(desc);
+                    tasks.addTask(todo);
+                    store.save(tasks);
+                    return ui.formatTaskAdded(todo, tasks.size());
 
-                    case "todo":
-                        Task todo = new ToDo(desc);
-                        tasks.addTask(todo);
-                        ui.showTaskAdded(todo, tasks.size());
-                        store.save(tasks);
-                        break;
+                case "deadline":
+                    LocalDateTime by = DTParser.parse(command.getDate1());
+                    Task dt = new Deadline(desc, by);
+                    tasks.addTask(dt);
+                    store.save(tasks);
+                    return ui.formatTaskAdded(dt, tasks.size());
 
-                    case "deadline":
-                        LocalDateTime by = DTParser.parse(command.getDate1());
-                        Task dt = new Deadline(desc, by);
-                        tasks.addTask(dt);
-                        ui.showTaskAdded(dt, tasks.size());
-                        store.save(tasks);
-                        break;
+                case "event":
+                    LocalDateTime start = DTParser.parse(command.getDate1());
+                    LocalDateTime end = DTParser.parse(command.getDate2());
+                    Task et = new Event(desc, start, end);
+                    tasks.addTask(et);
+                    store.save(tasks);
+                    return ui.formatTaskAdded(et, tasks.size());
 
-                    case "event":
-                        LocalDateTime start = DTParser.parse(command.getDate1());
-                        LocalDateTime end = DTParser.parse(command.getDate2());
-                        Task et = new Event(desc, start, end);
-                        tasks.addTask(et);
-                        ui.showTaskAdded(et, tasks.size());
-                        store.save(tasks);
-                        break;
+                case "delete":
+                    int toDelete = command.getIndex();
+                    tasks.deleteTask(toDelete);
+                    store.save(tasks);
+                    return ui.formatTaskDeleted(tasks.getTask(toDelete), tasks.size());
 
-                    case "delete":
-                        int toDelete = command.getIndex();
-                        tasks.deleteTask(toDelete);
-                        ui.showTaskDeleted(tasks.getTask(toDelete), tasks.size());
-                        store.save(tasks);
-                        break;
+                case "mark":
+                    int m = command.getIndex();
+                    tasks.markTask(m);
+                    store.save(tasks);
+                    return ui.formatShowMarked(tasks.getTask(m));
 
-                    case "mark":
-                        int m = command.getIndex();
-                        tasks.markTask(m);
-                        ui.showMarked(tasks.getTask(m));
-                        store.save(tasks);
-                        break;
+                case "find":
+                    List<Task> tl = tasks.findTasks(desc);
+                    return ui.showFound(tl, desc);
 
-                    case "find":
-                        List<Task> tl = tasks.findTasks(desc);
-                        ui.showFound(tl, desc);
-                        break;
-
-                    case "bye":
-                        ui.exitMessage();
-                        store.save(tasks);
-                        stop = true;
-                        break;
+                case "bye":
+                    store.save(tasks);
+                    return ui.exitMessage();
                 }
 
-            } catch (Exception e) {
-                ui.errorMessage(e.getMessage());
-            }
+            return ui.errorMessage("Unknown command.");
+
+        } catch (Exception e) {
+            return ui.errorMessage(e.getMessage());
         }
     }
 
-    public String getResponse(String input) {
-        return "Heard: " + input;
-    }
-
-    /**
-     * The entry point of the chatbot application.
-     * This method creates an instance of TalkCok and starts the chatbot by
-     * invoking the run method.
-     *
-     * @param args Command line arguments (not used).
-     */
-    public static void main(String[] args) {
-        new TalkCok().run();
+    public TaskList getTasks() {
+        return tasks;
     }
 }

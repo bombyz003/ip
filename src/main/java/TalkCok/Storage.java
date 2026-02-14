@@ -21,11 +21,11 @@ import java.util.Scanner;
  * - Save tasks to file when tasks are modified.
  * - Parse file format into task objects.
  */
-public class Store {
+public class Storage {
     private String FILE_PATH;
     Ui msg = new Ui();
 
-    public Store(String FILE_PATH) {
+    public Storage(String FILE_PATH) {
         this.FILE_PATH = FILE_PATH;
     }
 
@@ -35,9 +35,7 @@ public class Store {
             boolean created = f.mkdirs();
             if (!created) {
                 System.out.println("Error creating data directory");
-                return;
             }
-            System.out.println("Created folder: data");
         }
     }
 
@@ -50,9 +48,7 @@ public class Store {
                 Task ts = tasks.getTask(i);
                 pw.println(ts.toFileString());
             }
-
             pw.close();
-            System.out.println("::: Tasks saved :::");
 
         } catch (IOException e) {
             msg.errorMessage(e.getMessage());
@@ -126,7 +122,7 @@ public class Store {
             return task;
 
         } catch (Exception e) {
-            System.out.println("Error: cannot parse line: " + line);
+            System.err.println("Error: cannot parse line: " + line);
             return null;
         }
     }
