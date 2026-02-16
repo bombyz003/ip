@@ -6,11 +6,10 @@ import taskclasses.Task;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * A class that handles ui and display messages for the user.
+ */
 public class Ui {
-
-    public String openingMessage() {
-        return "Hi I'm TalkCok your chatbot. Enter you inputs.";
-    }
 
     public String exitMessage() {
         return "Byeeee! Hope to see you again.";

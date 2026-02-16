@@ -63,9 +63,10 @@ public class TalkCok {
 
                 case "delete":
                     int toDelete = command.getIndex();
+                    Task capture = tasks.getTask(toDelete);
                     tasks.deleteTask(toDelete);
                     store.save(tasks);
-                    return ui.formatTaskDeleted(tasks.getTask(toDelete), tasks.size());
+                    return ui.formatTaskDeleted(capture, tasks.size());
 
                 case "mark":
                     int m = command.getIndex();
@@ -89,6 +90,10 @@ public class TalkCok {
         }
     }
 
+    /**
+     * Method that returns the tasks stored in the list so far.
+     * @return tasklist of a Tasklist type
+     */
     public TaskList getTasks() {
         return tasks;
     }
