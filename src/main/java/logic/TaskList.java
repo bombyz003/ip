@@ -35,6 +35,11 @@ public class TaskList {
         return tasks.remove(index);
     }
 
+    /**
+     * Returns task at the requested index.
+     * @param index index of the task in the list.
+     * @throws IndexOutOfBoundsException if index < 1 or index > number of tasks.
+     */
     public Task getTask(int index) throws IndexOutOfBoundsException {
         return tasks.get(index);
     }
