@@ -40,6 +40,7 @@ public class Storage {
     }
 
     public void save(TaskList tasks) {
+        assert tasks != null : "Task list is null";
         try {
             confirmDirectoryExist();
             PrintWriter pw = new PrintWriter(this.FILE_PATH);
@@ -94,6 +95,7 @@ public class Storage {
     public static Task parseTask(String line) {
         try {
             String[] parts = line.split(" \\| ");
+            assert parts.length >= 3 : "File must have at least 3 fields";
             String type = parts[0];
             boolean isDone = parts[1].equals("1");
             String description = parts[2];
