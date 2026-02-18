@@ -1,6 +1,6 @@
 package TalkCok;
 
-import logic.DTParser;
+import logic.DateTimeParser;
 import logic.TaskList;
 import taskclasses.Deadline;
 import taskclasses.Event;
@@ -106,14 +106,14 @@ public class Storage {
                     task = new ToDo(description);
                     break;
                 case "D":
-                    LocalDateTime by = DTParser.parseFromFile(parts[3]);
+                    LocalDateTime by = DateTimeParser.parseFromFile(parts[3]);
                     task = new Deadline(description, by);
                     break;
                 case "E":
                     String[] fromToText = parts[3].split(" to ", 2);
                     System.out.println(parts[3]);
-                    LocalDateTime start = DTParser.parseFromFile(fromToText[0]);
-                    LocalDateTime end = DTParser.parseFromFile(fromToText[1]);
+                    LocalDateTime start = DateTimeParser.parseFromFile(fromToText[0]);
+                    LocalDateTime end = DateTimeParser.parseFromFile(fromToText[1]);
                     task = new Event(description, start, end);
                     break;
             }

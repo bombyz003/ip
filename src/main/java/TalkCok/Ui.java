@@ -41,7 +41,7 @@ public class Ui {
         return "Task has been marked as done:\n" + task.marker() + " " + task.getDesc();
     }
 
-    public String showFound(List<Task> ta, String toFind) {
+    public String formatShowFound(List<Task> ta, String toFind) {
         if (ta.isEmpty()) {
             return "No tasks found containing: \"" + toFind + "\"";
         }
