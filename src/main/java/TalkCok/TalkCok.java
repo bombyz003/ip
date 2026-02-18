@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import logic.AfterParse;
-import logic.DTParser;
+import logic.DateTimeParser;
 import logic.Parser;
 import logic.TaskList;
 import taskclasses.Deadline;
@@ -47,15 +47,15 @@ public class TalkCok {
                     return ui.formatTaskAdded(todo, tasks.size());
 
                 case "deadline":
-                    LocalDateTime by = DTParser.parse(command.getDate1());
+                    LocalDateTime by = DateTimeParser.parse(command.getDate1());
                     Task dt = new Deadline(desc, by);
                     tasks.addTask(dt);
                     store.save(tasks);
                     return ui.formatTaskAdded(dt, tasks.size());
 
                 case "event":
-                    LocalDateTime start = DTParser.parse(command.getDate1());
-                    LocalDateTime end = DTParser.parse(command.getDate2());
+                    LocalDateTime start = DateTimeParser.parse(command.getDate1());
+                    LocalDateTime end = DateTimeParser.parse(command.getDate2());
                     Task et = new Event(desc, start, end);
                     tasks.addTask(et);
                     store.save(tasks);
@@ -76,7 +76,7 @@ public class TalkCok {
 
                 case "find":
                     List<Task> tl = tasks.findTasks(desc);
-                    return ui.showFound(tl, desc);
+                    return ui.formatShowFound(tl, desc);
 
                 case "bye":
                     store.save(tasks);

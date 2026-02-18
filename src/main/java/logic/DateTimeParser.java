@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Parses only date and time.
  */
-public class DTParser {
+public class DateTimeParser {
 
     private static final List<DateTimeFormatter> FORMATTERS = Arrays.asList(
 
