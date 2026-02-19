@@ -1,15 +1,14 @@
 package TalkCok;
 
 import logic.DateTimeParser;
+import logic.DurationParser;
 import logic.TaskList;
-import taskclasses.Deadline;
-import taskclasses.Event;
-import taskclasses.Task;
-import taskclasses.ToDo;
+import taskclasses.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -102,20 +101,24 @@ public class Storage {
 
             Task task = null;
             switch (type) {
-                case "T":
-                    task = new ToDo(description);
-                    break;
-                case "D":
-                    LocalDateTime by = DateTimeParser.parseFromFile(parts[3]);
-                    task = new Deadline(description, by);
-                    break;
-                case "E":
-                    String[] fromToText = parts[3].split(" to ", 2);
-                    System.out.println(parts[3]);
-                    LocalDateTime start = DateTimeParser.parseFromFile(fromToText[0]);
-                    LocalDateTime end = DateTimeParser.parseFromFile(fromToText[1]);
-                    task = new Event(description, start, end);
-                    break;
+            case "T":
+                task = new ToDo(description);
+                break;
+            case "D":
+                LocalDateTime by = DateTimeParser.parseFromFile(parts[3]);
+                task = new Deadline(description, by);
+                break;
+            case "E":
+                String[] fromToText = parts[3].split(" to ", 2);
+                System.out.println(parts[3]);
+                LocalDateTime start = DateTimeParser.parseFromFile(fromToText[0]);
+                LocalDateTime end = DateTimeParser.parseFromFile(fromToText[1]);
+                task = new Event(description, start, end);
+                break;
+            case "F":
+                Duration d = DurationParser.parseDuration(parts[3]);
+                task = new FixedDuration(description, d);
+                break;
             }
 
             if (task != null && isDone) {

@@ -2,3 +2,4 @@ E | 0 | fml | 2026-02-11 0000 to 2026-03-11 2359
 T | 0 | shout n word
 E | 0 | big leagues | 2026-01-01 0000 to 2026-06-10 2359
 D | 0 | eat shit | 2026-01-16 2359
+F | 0 | shit | 120 min

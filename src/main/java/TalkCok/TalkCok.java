@@ -1,16 +1,11 @@
 package TalkCok;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import logic.AfterParse;
-import logic.DateTimeParser;
-import logic.Parser;
-import logic.TaskList;
-import taskclasses.Deadline;
-import taskclasses.Event;
-import taskclasses.Task;
-import taskclasses.ToDo;
+import logic.*;
+import taskclasses.*;
 
 public class TalkCok {
 
@@ -37,51 +32,58 @@ public class TalkCok {
             String desc = command.getDescription();
 
             switch (commandStr) {
-                case "list":
-                    return ui.formatListTask(tasks);
+            case "list":
+                return ui.formatListTask(tasks);
 
-                case "todo":
-                    Task todo = new ToDo(desc);
-                    tasks.addTask(todo);
-                    store.save(tasks);
-                    return ui.formatTaskAdded(todo, tasks.size());
+            case "todo":
+                Task todo = new ToDo(desc);
+                tasks.addTask(todo);
+                store.save(tasks);
+                return ui.formatTaskAdded(todo, tasks.size());
 
-                case "deadline":
-                    LocalDateTime by = DateTimeParser.parseEnd(command.getDate1());
-                    Task dt = new Deadline(desc, by);
-                    tasks.addTask(dt);
-                    store.save(tasks);
-                    return ui.formatTaskAdded(dt, tasks.size());
+            case "deadline":
+                LocalDateTime by = DateTimeParser.parseEnd(command.getDate1());
+                Task dt = new Deadline(desc, by);
+                tasks.addTask(dt);
+                store.save(tasks);
+                return ui.formatTaskAdded(dt, tasks.size());
 
-                case "event":
-                    LocalDateTime start = DateTimeParser.parseStart(command.getDate1());
-                    LocalDateTime end = DateTimeParser.parseEnd(command.getDate2());
-                    Task et = new Event(desc, start, end);
-                    tasks.addTask(et);
-                    store.save(tasks);
-                    return ui.formatTaskAdded(et, tasks.size());
+            case "event":
+                LocalDateTime start = DateTimeParser.parseStart(command.getDate1());
+                LocalDateTime end = DateTimeParser.parseEnd(command.getDate2());
+                Task et = new Event(desc, start, end);
+                tasks.addTask(et);
+                store.save(tasks);
+                return ui.formatTaskAdded(et, tasks.size());
 
-                case "delete":
-                    int toDelete = command.getIndex();
-                    Task capture = tasks.getTask(toDelete);
-                    tasks.deleteTask(toDelete);
-                    store.save(tasks);
-                    return ui.formatTaskDeleted(capture, tasks.size());
+            case "fixed":
+                Duration duration = DurationParser.parseDuration(command.getDate1());
+                Task fdt = new FixedDuration(desc, duration);
+                tasks.addTask(fdt);
+                store.save(tasks);
+                return ui.formatTaskAdded(fdt, tasks.size());
 
-                case "mark":
-                    int m = command.getIndex();
-                    tasks.markTask(m);
-                    store.save(tasks);
-                    return ui.formatShowMarked(tasks.getTask(m));
+            case "delete":
+                int toDelete = command.getIndex();
+                Task capture = tasks.getTask(toDelete);
+                tasks.deleteTask(toDelete);
+                store.save(tasks);
+                return ui.formatTaskDeleted(capture, tasks.size());
 
-                case "find":
-                    List<Task> tl = tasks.findTasks(desc);
-                    return ui.formatShowFound(tl, desc);
+            case "mark":
+                int m = command.getIndex();
+                tasks.markTask(m);
+                store.save(tasks);
+                return ui.formatShowMarked(tasks.getTask(m));
 
-                case "bye":
-                    store.save(tasks);
-                    return ui.exitMessage();
-                }
+            case "find":
+                List<Task> tl = tasks.findTasks(desc);
+                return ui.formatShowFound(tl, desc);
+
+            case "bye":
+                store.save(tasks);
+                return ui.exitMessage();
+            }
 
             return ui.errorMessage("Unknown command.");
 
