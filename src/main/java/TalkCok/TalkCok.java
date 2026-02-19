@@ -47,15 +47,15 @@ public class TalkCok {
                     return ui.formatTaskAdded(todo, tasks.size());
 
                 case "deadline":
-                    LocalDateTime by = DateTimeParser.parse(command.getDate1());
+                    LocalDateTime by = DateTimeParser.parseEnd(command.getDate1());
                     Task dt = new Deadline(desc, by);
                     tasks.addTask(dt);
                     store.save(tasks);
                     return ui.formatTaskAdded(dt, tasks.size());
 
                 case "event":
-                    LocalDateTime start = DateTimeParser.parse(command.getDate1());
-                    LocalDateTime end = DateTimeParser.parse(command.getDate2());
+                    LocalDateTime start = DateTimeParser.parseStart(command.getDate1());
+                    LocalDateTime end = DateTimeParser.parseEnd(command.getDate2());
                     Task et = new Event(desc, start, end);
                     tasks.addTask(et);
                     store.save(tasks);

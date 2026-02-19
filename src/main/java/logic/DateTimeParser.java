@@ -6,11 +6,17 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Parses only date and time.
  */
 public class DateTimeParser {
+
+    public enum eventContext {
+        START,
+        END
+    }
 
     private static final List<DateTimeFormatter> FORMATTERS = Arrays.asList(
 
@@ -40,39 +46,60 @@ public class DateTimeParser {
     /**
      * Returns a date and time specified in a task.
      *
-     * @param dateTime A date/time string of a task from the user input.
+     * @param inputDateTime A date/time string of a task from the user input.
      * @return Date and time.
      * @throws DateTimeParseException if no matching format is found from the user input.
      */
-    public static LocalDateTime parse(String dateTime) throws DateTimeParseException {
-        dateTime = dateTime.trim();
+    public static LocalDateTime parse(String inputDateTime, eventContext context) throws DateTimeParseException {
+        inputDateTime = inputDateTime.trim();
 
-        if (dateTime.isEmpty()) {
-            throw new DateTimeParseException("Date string is empty", dateTime, 0);
+        if (inputDateTime.isEmpty()) {
+            throw new DateTimeParseException("Date string is empty", inputDateTime, 0);
         }
 
+        try {
+            return parseWithTime(inputDateTime);
+        } catch (DateTimeParseException e) {
+            LocalDate date = parseDate(inputDateTime);
+            if (context.equals(eventContext.END)) {
+                return date.atTime(23, 59);
+            }
+            return date.atStartOfDay();
+        }
+    }
+
+    public static LocalDateTime parseStart(String dateTimeString) {
+        return parse(dateTimeString, eventContext.START);
+    }
+
+    public static LocalDateTime parseEnd(String dateTimeString) {
+        return parse(dateTimeString, eventContext.END);
+    }
+
+    public static LocalDateTime parseWithTime(String dateTimeString) {
         for (DateTimeFormatter formatter : FORMATTERS) {
             try {
-                return LocalDateTime.parse(dateTime, formatter);
+                return LocalDateTime.parse(dateTimeString, formatter);
             } catch (DateTimeParseException e) {
                 // try next formatter
             }
         }
+        throw new DateTimeParseException("Cannot parse " + dateTimeString, dateTimeString, 0);
+    }
 
+    public static LocalDate parseDate(String dateString) {
         for (DateTimeFormatter formatter: DATE_FORMATTERS) {
             try {
-                LocalDate date = LocalDate.parse(dateTime, formatter);
-                return date.atTime(23, 59);
+                return LocalDate.parse(dateString, formatter);
             } catch (DateTimeParseException e) {
                 // continue
             }
         }
-
         throw new DateTimeParseException(
-                "Cannot parse: " + dateTime + ", incorrect formatting.\n" +
+                "Cannot parse: " + dateString + ", incorrect formatting.\n" +
                         "Check that date is included minimally. Use only d m y formats " +
                         "such as 25/2/2026 or 2026-2-25 1:25PM",
-                dateTime, 0);
+                dateString, 0);
     }
 
     /**

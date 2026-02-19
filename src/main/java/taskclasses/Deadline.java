@@ -1,6 +1,6 @@
 package taskclasses;
 
-import logic.DTParser;
+import logic.DateTimeParser;
 
 import java.time.LocalDateTime;
 
@@ -18,12 +18,12 @@ public class Deadline extends Task {
     @Override
     public String toString() {
         return "[D]" + this.marker() + super.toString() + " (by: " +
-                DTParser.formatForDisplay(by)+ ")";
+                DateTimeParser.formatForDisplay(by)+ ")";
     }
 
     @Override
     public String toFileString() {
         return "D | " + (this.isDone() ? "1" : "0") + " | " + getDesc() + " | " +
-                DTParser.formatForFile(by);
+                DateTimeParser.formatForFile(by);
     }
 }
