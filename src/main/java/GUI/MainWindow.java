@@ -1,7 +1,9 @@
 package GUI;
 
 import TalkCok.TalkCok;
+import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -41,6 +43,7 @@ public class MainWindow extends AnchorPane {
         chatbox.getChildren().addAll(
                 DialogBox.getUserDialog(userInput), DialogBox.getReply(reply)
         );
+        scrollToBottom();
         userTyped.clear();
     }
 
@@ -51,5 +54,14 @@ public class MainWindow extends AnchorPane {
             stage.close();
         });
         delay.play();
+    }
+
+    private void scrollToBottom() {
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.millis(200), e -> {
+                    scrollPane.setVvalue(1.0);
+                })
+        );
+        timeline.play();
     }
 }
