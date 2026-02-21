@@ -110,7 +110,6 @@ public class Storage {
                 break;
             case "E":
                 String[] fromToText = parts[3].split(" to ", 2);
-                System.out.println(parts[3]);
                 LocalDateTime start = DateTimeParser.parseFromFile(fromToText[0]);
                 LocalDateTime end = DateTimeParser.parseFromFile(fromToText[1]);
                 task = new Event(description, start, end);
