@@ -6,7 +6,7 @@ TalkCok is a desktop app for helping you track your tasks, optimized for use via
 a chatbot. Enter your commands to let the bot know what to do, and it will reply to you accordingly. A very
 fuss-free task tracker!
 
-## Adding deadlines
+## Adding tasks
 
 Deadlines are one of the four types of tasks you can add. It is simply a task with a deadline.
 
@@ -24,7 +24,7 @@ cut hair (by 25 Apr 2026, 11:59PM)
 
 ## List of passable commands
 
-| **Command word** |        **purpose**         |          **usage format**          |
+| **Command word** |        **Purpose**         |          **Usage format**          |
 |------------------|:--------------------------:|:----------------------------------:|
 | todo             |     adds a to-do task      |            todo [task]             |
 | deadline         |    adds a deadline task    |     deadline [task] /by [date]     |
