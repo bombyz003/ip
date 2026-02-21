@@ -43,12 +43,15 @@ test {
 }
 
 application {
-    mainClass.set("Launcher")
+    mainClass.set("GUI.Launcher")
 }
 
 shadowJar {
     archiveBaseName = "TalkCok"
     archiveClassifier = null
+    manifest {
+        attributes 'Main-Class': "GUI.Launcher"
+    }
 }
 
 run{
