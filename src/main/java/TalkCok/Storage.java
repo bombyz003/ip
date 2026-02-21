@@ -28,6 +28,9 @@ public class Storage {
         this.FILE_PATH = FILE_PATH;
     }
 
+    /**
+     * Makes sure 'data' directory exists and creates it if it doesn't.
+     */
     public void confirmDirectoryExist() {
         File f = new File("data");
         if (!f.exists()) {
@@ -38,6 +41,10 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves a task to the file stored in the 'data' directory.
+     * @param tasks
+     */
     public void save(TaskList tasks) {
         assert tasks != null : "Task list is null";
         try {
@@ -91,6 +98,11 @@ public class Storage {
         return new TaskList(tasks);
     }
 
+    /**
+     * Parses tasks recorded in the data file to be displayed.
+     * @param line a line representing a single task and its details.
+     * @return the task
+     */
     public static Task parseTask(String line) {
         try {
             String[] parts = line.split(" \\| ");

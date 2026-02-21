@@ -2,6 +2,9 @@ package taskclasses;
 
 import java.time.Duration;
 
+/**
+ * Task classified as Fixed duration.
+ */
 public class FixedDuration extends Task{
     Duration duration;
 
@@ -10,6 +13,10 @@ public class FixedDuration extends Task{
         this.duration = duration;
     }
 
+    /**
+     * Gets the duration of the task as a string.
+     * @return Duration of the task.
+     */
     public String getDurationString() {
         long hours = duration.toHours();
         long minutes = duration.toMinutesPart();

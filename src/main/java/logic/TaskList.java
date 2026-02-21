@@ -65,6 +65,11 @@ public class TaskList {
         tasks.get(index).finishTask();
     }
 
+    /**
+     * Finds all tasks that contain a keyword specified by the user.
+     * @param toFind The keyword specified by the user.
+     * @return All tasks that contain the keyword.
+     */
     public List<Task> findTasks(String toFind) {
         List<Task> found = new ArrayList<>();
         for (Task task : tasks) {

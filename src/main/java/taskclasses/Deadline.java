@@ -5,7 +5,7 @@ import logic.DateTimeParser;
 import java.time.LocalDateTime;
 
 /**
- * Tasks classified as to do.
+ * Tasks classified as deadline.
  */
 public class Deadline extends Task {
     LocalDateTime by;

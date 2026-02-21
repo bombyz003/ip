@@ -76,6 +76,11 @@ public class DateTimeParser {
         return parse(dateTimeString, eventContext.END);
     }
 
+    /**
+     * Parsing of date and time string.
+     * @param dateTimeString user input of date and time.
+     * @return date and time
+     */
     public static LocalDateTime parseWithTime(String dateTimeString) {
         for (DateTimeFormatter formatter : FORMATTERS) {
             try {
@@ -87,6 +92,11 @@ public class DateTimeParser {
         throw new DateTimeParseException("Cannot parse " + dateTimeString, dateTimeString, 0);
     }
 
+    /**
+     * Parsing of date-only string, without time.
+     * @param dateString user input of date.
+     * @return date
+     */
     public static LocalDate parseDate(String dateString) {
         for (DateTimeFormatter formatter: DATE_FORMATTERS) {
             try {

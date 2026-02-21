@@ -5,7 +5,7 @@ import logic.DateTimeParser;
 import java.time.LocalDateTime;
 
 /**
- * Tasks classified as to event.
+ * Tasks classified as event.
  */
 public class Event extends Task {
     LocalDateTime start;

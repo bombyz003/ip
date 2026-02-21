@@ -42,6 +42,11 @@ public class Task {
         else return desc;
     }
 
+    /**
+     * Formats the task to be stored inside the text file.
+     * Overridden by all its subclasses.
+     * @return String that is in the correct format for storage.
+     */
     public String toFileString() {
         return "ok";
     }
