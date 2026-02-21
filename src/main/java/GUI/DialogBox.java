@@ -31,6 +31,8 @@ public class DialogBox extends HBox {
             this.setAlignment(Pos.CENTER_RIGHT);
         } else {
             this.setAlignment(Pos.CENTER_LEFT);
+            dialog.getStyleClass().clear();
+            dialog.getStyleClass().add("reply-label");
         }
     }
 

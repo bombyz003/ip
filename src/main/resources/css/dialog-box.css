@@ -1,0 +1,28 @@
+.label {
+    -fx-background-color: linear-gradient(to bottom right, #4a5568, #2d3748);
+    -fx-text-fill: white;
+    -fx-border-color: #1a202c;
+    -fx-border-width: 1px;
+    -fx-background-radius: 16px 16px 4px 16px;
+    -fx-border-radius: 16px 16px 4px 16px;
+    -fx-font-size: 14px;
+    -fx-padding: 5px 10px 5px 10px;
+}
+
+.reply-label {
+    -fx-background-color: linear-gradient(to bottom right, #f7fafc, #edf2f7);
+    -fx-text-fill: #1a202c;
+    -fx-border-color: #cbd5e0;
+    -fx-border-width: 1px;
+    -fx-background-radius: 16px 16px 16px 4px;
+    -fx-border-radius: 16px 16px 16px 4px;
+    -fx-padding: 5px 10px 5px 10px;
+    -fx-font-size: 14px;
+}
+
+.label:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 8, 0, 0, 3);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+    -fx-transition: all 0.2s ease;
+}
