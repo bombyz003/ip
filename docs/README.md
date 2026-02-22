@@ -12,7 +12,7 @@ Deadlines are one of the four types of tasks you can add. It is simply a task wi
 
 To add such a task, enter "deadline /by" followed by the task and its deadline behind.
 
-Example: `deadline cut hair /by 25-4-2026` (Note that this date is in dd-mm-yyyy format but not the only
+Example: `deadline cut hair /by 25-4-2026` (Note that this date is in dd-mm-yyyy format, but it's not the only
 accepted format.)
 
 The bot should reply with:
